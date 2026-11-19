@@ -1,0 +1,143 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarvis - AI Voice Assistant</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 3rem 0;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            width: 30%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #6e48aa;
+            margin-bottom: 1rem;
+        }
+        .demo-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 3rem 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        .btn {
+            background: #6e48aa;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 1rem;
+        }
+        .btn:hover {
+            background: #9d50bb;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Jarvis AI Assistant</h1>
+            <p class="tagline">Your intelligent voice-controlled companion for everyday tasks</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="about">
+            <h2>Meet Jarvis</h2>
+            <p>Jarvis is an advanced AI voice assistant that understands natural language, learns from interactions, and adapts to your preferences. Powered by cutting-edge AI technology, Jarvis makes your life easier through voice commands.</p>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🎙️</div>
+                <h3>Voice Commands</h3>
+                <p>Control devices, set reminders, and get information just by speaking naturally to Jarvis.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Smart Search</h3>
+                <p>Get instant answers to your questions across multiple knowledge domains.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Multi-Platform</h3>
+                <p>Works seamlessly across all your devices from smartphones to smart home systems.</p>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2>Try Jarvis Now</h2>
+            <p>Click below to start interacting with Jarvis. Speak naturally and discover the power of AI.</p>
+            <button class="btn" id="startAssistant">Activate Voice Assistant</button>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Jarvis AI Technologies. Created by Kutub.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('startAssistant').addEventListener('click', function() {
+            alert("Jarvis: Hello! How can I assist you today? Try saying 'What's the weather today?' or 'Set a reminder for my meeting.'");
+        });
+    </script>
+</body>
+</html>
+```

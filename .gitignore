@@ -1,0 +1,29 @@
+# ===== SECRETS (kabhi GitHub pe nahi jaana chahiye) =====
+.env
+.env.*
+!.env.example
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# ===== Generated / bada / personal =====
+screenshots/
+screenshort/
+generated_sites/
+*.zip
+*.bak
+
+# Piper voice models (har ek ~60MB) — repo me nahi, README me download link do
+*.onnx
+*.onnx.json
+
+# ===== Editor / OS =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

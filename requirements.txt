@@ -1,0 +1,13 @@
+SpeechRecognition
+pyttsx3
+gTTS
+elevenlabs
+pygame
+requests
+python-dotenv
+flask
+flask-cors
+pyautogui
+pygetwindow
+pyperclip
+piper-tts
