@@ -1546,7 +1546,8 @@ void main(){
       const SLEEP_AFTER_MS = 30000;
       const FOCUS_URL = STREAM_URL.replace('/stream', '/focus');
       const wakeBtn = $('wake-btn');
-      let wakeMode = false, awake = true, busy = false, sleepTimer = null, restartTimer = null;
+      let wakeMode = false, awake = true, busy = false, sleepTimer = null, restartTimer = null, busySince = 0;
+      function setBusy(v) { busy = v; busySince = v ? Date.now() : 0 }
 
       function focusNova() {
         fetch(FOCUS_URL, { method: 'POST' }).catch(() => { });
@@ -1596,7 +1597,7 @@ void main(){
         }
       }
       function resumeListening() {
-        busy = false;
+        setBusy(false);
         armSleepTimer();
         if (wakeMode || convoActive) startRecognizer();
         showCaption();
@@ -1604,7 +1605,7 @@ void main(){
       function goToSleep() {
         if (!wakeMode || !awake) return;
         if (busy || state === 'speaking' || state === 'thinking') { armSleepTimer(); return }
-        awake = false; convoActive = false; busy = true;
+        awake = false; convoActive = false; setBusy(true);
         chime(false); showCaption();
         stopRecognizer();
         speak("Going to sleep. Say Nova to wake me up.", () => { setState('idle'); resumeListening(); showCaption(); });
@@ -1614,7 +1615,7 @@ void main(){
         chime(true); showCaption();          // turant sanket: beep + button "awake"
         setState('listening');
         focusNova();
-        busy = true; stopRecognizer();
+        setBusy(true); stopRecognizer();
         if (restOfSentence) {
           runCommand(restOfSentence, true);
         } else {
@@ -1633,7 +1634,7 @@ void main(){
         setState('thinking');
         diagLatency.textContent = '-';
         clearTimeout(sleepTimer);
-        if (wakeMode) { awake = true; busy = true; stopRecognizer() }   // Nova bolte waqt mic band: apni awaaz na sune
+        if (wakeMode) { awake = true; setBusy(true); stopRecognizer() }   // Nova bolte waqt mic band: apni awaaz na sune
 
         const m = said.match(/^(jarvis|jervish|nova)[,]?\s*(.*)$/i);
         let toProcess = said, justWake = false;
@@ -1664,7 +1665,7 @@ void main(){
         try { localStorage.setItem('nova_wake', on ? '1' : '0') } catch (e) { }
         clearTimeout(sleepTimer);
         if (on) {
-          convoActive = true; busy = false;
+          convoActive = true; setBusy(false);
           if (recognizing) { stopRecognizer() }       // continuous mode me dobara shuru hoga (onend)
           else startRecognizer();
           armSleepTimer();
@@ -1711,14 +1712,25 @@ void main(){
           } else if (e.error === 'aborted') {
             /* intentional stop */
           } else if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
-            addMessage('nova', 'Microphone permission is blocked. Allow the mic for this page and try again.');
-            if (wakeMode) setWakeMode(false);
-            convoActive = false; setState('idle'); idleCaption();
+            /* Sach me block hai ya bas chhoti dikkat (window peeche gayi)? Permission check karke hi band karo. */
+            const giveUp = () => {
+              micCaption.textContent = 'Mic blocked: click the lock icon near the address bar, allow Microphone';
+              addMessage('nova', 'Microphone permission is blocked. Allow the mic for this page and try again.');
+              if (wakeMode) setWakeMode(false);
+              convoActive = false; setState('idle');
+            };
+            if (navigator.permissions && navigator.permissions.query) {
+              navigator.permissions.query({ name: 'microphone' }).then(p => {
+                if (p.state === 'denied') giveUp();
+                else { micCaption.textContent = 'Mic paused, retrying...'; clearTimeout(restartTimer); restartTimer = setTimeout(startRecognizer, 1500) }
+              }).catch(giveUp);
+            } else giveUp();
           } else if (wakeMode && (e.error === 'network' || e.error === 'audio-capture')) {
             /* chhoti dikkat: onend dobara koshish karega */
           } else {
+            micCaption.textContent = 'Mic error: ' + e.error;
             addMessage('nova', 'Recognition error: ' + e.error);
-            convoActive = false; setState('idle'); idleCaption();
+            convoActive = false; setState('idle');
           }
         };
         recognizer.onend = () => {
@@ -1747,14 +1759,35 @@ void main(){
           return;
         }
         getCtx();
-        if (wakeMode) { setWakeMode(false); return }     // Hey Nova on ho to mic button = band karo
-        if (recognizing) {
+        if (wakeMode && !awake) {                        // soya hua hai -> mic button = haath se jaga do
+          awake = true; setBusy(false); chime(true); convoActive = true;
+          setState('listening'); armSleepTimer(); showCaption();
+          if (!recognizing) startRecognizer();
+          return;
+        }
+        if (recognizing) {                               // chal raha hai -> band
+          if (wakeMode) { setWakeMode(false); return }
           convoActive = false;
           recognizer.stop();
-        } else {
-          convoActive = true;
-          try { recognizer.start() } catch (e) { }
+        } else {                                         // band hai -> abhi sunna shuru (Hey Nova on ho tab bhi)
+          setBusy(false); awake = true; convoActive = true;
+          if (wakeMode) armSleepTimer();
+          try { recognizer.continuous = wakeMode; recognizer.start() } catch (e) {
+            clearTimeout(restartTimer); restartTimer = setTimeout(startRecognizer, 400);
+          }
+          showCaption();
         }
+      });
+
+      /* Watchdog: Hey Nova on hai par mic ruk gaya (window peeche gayi, Chrome ne session band kiya, busy atak gaya)
+         to apne aap theek karo. Har 2 second. */
+      setInterval(() => {
+        if (!wakeMode || !SR) return;
+        if (busy && state === 'idle' && Date.now() - busySince > 4000) setBusy(false);
+        if (!busy && !recognizing) startRecognizer();
+      }, 2000);
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && wakeMode && !busy && !recognizing) startRecognizer();
       });
 
       /* Typed input */

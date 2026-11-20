@@ -43,10 +43,16 @@ GATE_WORDS = {
     "notepad", "type", "screenshot", "capture", "camera", "photo", "volume", "louder", "quieter",
     "mute", "weather", "temperature", "time", "date", "day", "website", "site", "youtube",
     "facebook", "linkedin", "github", "gmail", "instagram", "forget",
+    "close", "quit", "exit", "minimize", "maximize", "desktop", "tab", "refresh", "reload", "scroll", "pause",
+    "resume", "next", "previous", "skip", "lock", "paste", "copy", "undo", "save", "fullscreen", "press",
+    "switch", "window", "music", "song", "calculator", "calc", "settings", "setting", "chrome", "edge", "paint",
+    "word", "excel", "powerpoint", "spotify", "whatsapp", "discord", "telegram", "vlc", "terminal", "explorer",
+    "nova", "unmute",
     # Hinglish / Hindi
     "khol", "kholo", "khol", "chala", "chalao", "chalado", "bajao", "baja", "laga", "lagao",
     "dhoondh", "dhundh", "khoj", "likh", "likho", "mausam", "baje", "samay", "tarikh", "awaaz",
     "awaz", "badha", "badhao", "ghata", "ghatao", "bhool", "bhul",
+    "band", "bandh", "bund", "rok", "roko", "ruko", "agla", "pichla", "chalu", "shuru", "neeche", "upar", "kam",
     "खोल", "खोलो", "चला", "चलाओ", "बजाओ", "लिख", "लिखो", "मौसम", "समय", "आवाज़",
 }
 
@@ -72,6 +78,13 @@ abhi kitne baje hain -> what time is it
 awaaz thodi badha do -> turn up volume
 screen ka photo le lo -> take a screenshot
 python tutorial google pe dhoondh do -> search for python tutorial
+setting ko band karo -> close settings
+calculator chalu kar do -> open calculator
+chrome minimize kar do -> minimize
+gaana roko -> pause music
+agla gaana lagao -> next song
+ye tab band kar do -> close tab
+screen lock kar do -> lock the screen
 what is photosynthesis -> CHAT
 tum kaise ho -> CHAT
 explain how a CPU works -> CHAT"""

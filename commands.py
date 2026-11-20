@@ -748,7 +748,7 @@ def open_camera(m):
     return capture_photo()
 
 
-@command("open site", r"\bopen\s+(?P<site>" + "|".join(SITES) + r")\b")
+@command("open site", r"\bopen\s+(?P<site>" + "|".join(SITES) + r")\b(?!\s+chrome)")
 def open_site(m):
     site = m.group("site").lower()
     _open_url(SITES[site])
@@ -992,35 +992,97 @@ APP_TITLE_HINT = {
     "telegram": "Telegram", "discord": "Discord", "vlc": "VLC", "snipping tool": "Snipping Tool",
     "clock": "Clock", "store": "Microsoft Store", "photos": "Photos", "maps": "Maps", "camera": "Camera",
 }
-_APP_RX = "|".join(re.escape(a) for a in sorted(APPS, key=len, reverse=True))
+# Bolne ke alag naam / singular-plural: "setting" bhi "settings" hi hai
+APP_ALIASES = {
+    "setting": "settings", "windows settings": "settings", "system settings": "settings", "calc": "calculator",
+    "microsoft word": "word", "ms word": "word", "microsoft excel": "excel", "ms excel": "excel",
+    "power point": "powerpoint", "ms powerpoint": "powerpoint", "file manager": "file explorer",
+    "google chrome": "chrome", "microsoft edge": "edge", "visual studio code": "vs code", "vs": "vs code",
+    "whats app": "whatsapp", "photo": "photos", "map": "maps", "task manager": "task manager",
+    "command line": "command prompt", "windows terminal": "terminal", "snipping": "snipping tool",
+}
+_APP_NAMES = list(APPS) + list(APP_ALIASES)
+_APP_RX = "|".join(re.escape(a) for a in sorted(_APP_NAMES, key=len, reverse=True))
+_ART = r"(?:the\s+|your\s+|my\s+)?"       # "open your setting", "close the calculator"
+
+
+def _resolve_app(name):
+    name = name.lower()
+    return APP_ALIASES.get(name, name)
 
 
 def _launch(target):
     subprocess.Popen(["cmd", "/c", "start", "", target])
 
 
-@command("open app", r"^\s*(?:open|launch|start)\s+(?:the\s+)?(?P<app>" + _APP_RX + r")(?:\s+app)?\s*$",
+@command("open app", r"^\s*(?:open|launch|start)\s+" + _ART + r"(?P<app>" + _APP_RX + r")(?:\s+app)?\s*$",
          windows_only=True,
          usage="open <app>   (notepad, calculator, paint, word, excel, powerpoint, vs code, chrome, spotify, "
                "task manager, settings, file explorer, command prompt, whatsapp, discord ...)")
 def open_app(m):
-    app = m.group("app").lower()
+    app = _resolve_app(m.group("app"))
     before = {_win_key(w) for w in _all_windows()} if (IS_WINDOWS and AUTOMATION_AVAILABLE) else set()
     _launch(APPS[app][0])
     _in_background(front_new_app, before, APP_TITLE_HINT.get(app))    # background me na reh jaye
     return f"Opening {app}."
 
 
-@command("close app", r"^\s*(?:close|quit|exit|kill)\s+(?:the\s+)?(?P<app>" + _APP_RX + r")(?:\s+app)?\s*$",
-         windows_only=True, usage="close <app>")
+_BROWSER_PROCS = ("chrome.exe", "msedge.exe")      # inhe taskkill se nahi maarte: Nova khud browser app-window me ho sakti hai
+_SKIP_TITLES = ("program manager", "task switching", "start", "search", "windows input experience")
+
+
+def _windows_for_app(app):
+    """App ki visible windows (Nova kabhi nahi). Pehle exact/'- hint' title, phir title me hint."""
+    hint = (APP_TITLE_HINT.get(app) or app).lower()
+    wins = [w for w in _all_windows() if not _is_nova_title(w.title)]
+    exact = [w for w in wins if w.title.strip().lower() == hint or w.title.strip().lower().endswith(" - " + hint)]
+    if exact:
+        return exact
+    is_browser_app = hint in ("google chrome", "microsoft edge", "firefox")
+    return [w for w in wins if hint in w.title.lower()
+            and (is_browser_app or not w.title.strip().lower().endswith(BROWSER_TITLE_ENDINGS))]
+
+
+@command("close app", r"^\s*(?:close|quit|exit|kill)\s+" + _ART + r"(?P<app>" + _APP_RX + r")(?:\s+app)?\s*$",
+         windows_only=True,
+         usage="close <app>   (same app names as open: settings, calculator, notepad, chrome, word, spotify ...)")
 def close_app(m):
-    app = m.group("app").lower()
+    app = _resolve_app(m.group("app"))
+    # 1) Window ko seedha close karo (WM_CLOSE): Settings/Calculator jaise Store apps ke liye taskkill kaam nahi karta,
+    #    kyunki unki window dusre process me hoti hai. Save dialog aane par app khud poochta hai.
+    closed = 0
+    for w in _windows_for_app(app):
+        try:
+            w.close()
+            closed += 1
+        except Exception:
+            log.exception("close failed for %s", w.title)
+    if closed:
+        return f"Closing {app}."
+    # 2) Window nahi mili -> process naam se (browser ko chhodke; /F nahi)
     proc = APPS[app][1]
-    if not proc:
-        return f"Sorry, I can't close {app} safely."
-    # /F nahi: app apna "save karna hai?" dialog dikha sakta hai, kaam khoya nahi jaata.
+    if not proc or proc.lower() in _BROWSER_PROCS:
+        return f"I couldn't find an open {app} window."
     result = subprocess.run(["taskkill", "/IM", proc], capture_output=True, text=True)
     return f"Closing {app}." if result.returncode == 0 else f"{app.capitalize()} doesn't seem to be running."
+
+
+@command("close window",
+         r"^\s*(?:(?:close|quit)(?:\s+(?:this|that|it|the))?(?:\s+(?:window|app|application))?|band)(?:\s+(?:karo|kar\s*do|kardo|kijiye))?\s*[.!]?\s*$",
+         windows_only=True, usage="close this window   (closes the app window you were using, never Nova)")
+def close_window(m):
+    cands = [w for w in _all_windows()
+             if not _is_nova_title(w.title) and w.title.strip().lower() not in _SKIP_TITLES]
+    if not cands:
+        return "I couldn't find a window to close."
+    win = cands[0]                      # z-order me sabse upar wali (jo abhi dikh rahi hai)
+    title = win.title.strip()
+    try:
+        win.close()
+    except Exception:
+        log.exception("close failed for %s", title)
+        return "Sorry, I couldn't close that window."
+    return f"Closing {title}."[:80]
 
 
 @command("go to nova",

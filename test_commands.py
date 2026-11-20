@@ -979,3 +979,61 @@ def test_open_url_fronts_browser_on_windows_only(env):
     for th in [th for th in __import__("threading").enumerate() if th.name == "front-window"]:
         th.join(3)
     assert calls == ["http://x", "http://y", "front"]
+
+
+def test_singular_and_aliases_and_your_article(ctl):
+    """Screenshot bug: 'close setting' / 'open your setting' AI chat me chale gaye the."""
+    assert ctl.run("close setting") == "Closing settings."
+    assert ctl.ran[-1] == ["taskkill", "/IM", "SystemSettings.exe"]
+    assert ctl.run("open your setting") == "Opening settings."
+    assert ctl.run("open the calc") == "Opening calculator."
+    assert ctl.run("close ms word") == "Closing word."
+    assert ctl.run("open google chrome") == "Opening chrome."
+
+
+def test_router_gate_lets_hinglish_close_and_media_commands_through(env):
+    import intent_router
+    for text in ("setting ko close karo", "setting ko band karo", "gaana roko", "agla gaana lagao",
+                 "chrome minimize kar do", "ye tab band kar do", "screen lock kar do", "calculator chalu kar do"):
+        assert intent_router.looks_like_command(text), text
+    assert not intent_router.looks_like_command("what is photosynthesis")
+
+
+class CloseDesk:
+    def __init__(self):
+        self.closed = []
+        mk = lambda t: types.SimpleNamespace(title=t, visible=True, isMinimized=False, close=lambda t=t: self.closed.append(t))
+        self.wins = [mk("Settings"), mk("Nova - Voice assistant"), mk("Settings - Google Chrome"), mk("Untitled - Notepad")]
+
+
+@pytest.fixture()
+def closer(ctl):
+    d = CloseDesk()
+    ctl.c.gw = types.SimpleNamespace(getAllWindows=lambda: d.wins, getActiveWindow=lambda: None)
+    ctl.desk = d
+    return ctl
+
+
+def test_close_settings_closes_the_window_not_only_the_process(closer):
+    """Screenshot bug: 'Closing settings.' bola par Settings khuli rahi (taskkill UWP window nahi band karta)."""
+    assert closer.run("close settings") == "Closing settings."
+    assert closer.desk.closed == ["Settings"]            # Chrome ka 'Settings - Google Chrome' tab/window nahi
+    assert not any(a[0] == "taskkill" for a in closer.ran)
+
+
+def test_close_app_never_closes_nova_and_falls_back_honestly(closer):
+    closer.desk.wins = [w for w in closer.desk.wins if "Notepad" not in w.title and "Chrome" not in w.title]
+    assert "couldn't find" in closer.run("close chrome")       # Nova ya browser process ko taskkill nahi
+    assert closer.desk.closed == []
+    assert closer.run("close notepad") == "Closing notepad."  # window nahi: taskkill fallback
+    assert closer.ran[-1] == ["taskkill", "/IM", "notepad.exe"]
+
+
+def test_close_this_window_closes_top_non_nova_window(closer):
+    closer.desk.wins = closer.desk.wins[1:]                    # Nova upar, phir Chrome, phir Notepad
+    for phrase in ("close karo", "close this window", "band karo", "close it"):
+        closer.desk.closed.clear()
+        assert closer.run(phrase).startswith("Closing"), phrase
+        assert closer.desk.closed == ["Settings - Google Chrome"], phrase
+    closer.desk.wins = [closer.desk.wins[0]]                   # sirf Nova bachi
+    assert "couldn't find" in closer.run("close karo")
