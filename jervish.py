@@ -6,9 +6,13 @@ file me hai. Naya command add karna ho to commands.py khologe,
 jervish.py ko chhedne ki zaroorat nahi padegi.
 """
 
+import os
 import sys
 import json
 import base64
+import logging
+from pathlib import Path
+
 import speech_recognition as sr
 
 from client_elevenlabs import speak, get_audio_bytes, synthesize_stream
@@ -19,18 +23,65 @@ from client_deepseek import reset_conversation
 # get_text_reply()  -> web mode (nova.html/buddy.html) ke commands
 # Dono commands.py me define hain — wahi file kholna hai jab bhi koi
 # naya command add/edit karna ho.
-from commands import processCommand, get_text_reply, get_reply_stream
+from commands import processCommand, get_text_reply, get_reply_stream, return_to_nova
 
 # 🔹 Flask (web frontend, nova.html/buddy.html, isse baat karta hai)
-from flask import Flask, request, jsonify, Response, stream_with_context
+from flask import Flask, request, jsonify, Response, stream_with_context, send_from_directory
 from flask_cors import CORS
+
+log = logging.getLogger("jervish")
+
+# ============================================================
+# CONFIG (naam, wake words, port) — ek jagah
+# ============================================================
+ASSISTANT_NAME = "Nova"
+WAKE_WORDS = ("nova", "jervish")      # inme se kuch bhi bolo to jaag jaata hai
+HOST = "127.0.0.1"
+PORT = 5000
+BASE_DIR = Path(__file__).resolve().parent
+FRONTEND_FILE = os.environ.get("FRONTEND_FILE", "jarvis.html")
 
 
 # ============================================================
 # WEB MODE — frontend (nova.html/buddy.html) isse call karta hai
 # ============================================================
 app = Flask(__name__)
-CORS(app)
+
+# 🔒 SECURITY: sirf apna hi frontend (isi server se khula page) API ko call
+# kar sakta hai. Pehle CORS(app) sab websites ko allow karta tha, to koi bhi
+# khuli website tumhare laptop pe commands (camera, notepad...) chala sakti thi.
+# Frontend kholne ka sahi tarika:  http://127.0.0.1:5000  (HTML double-click mat karo).
+ALLOWED_ORIGINS = {f"http://127.0.0.1:{PORT}", f"http://localhost:{PORT}"}
+ALLOWED_ORIGINS |= {o.strip() for o in os.environ.get("EXTRA_ALLOWED_ORIGINS", "").split(",") if o.strip()}
+CORS(app, origins=sorted(ALLOWED_ORIGINS))
+
+STATIC_EXTENSIONS = {".mp4", ".webm", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp",
+                     ".css", ".js", ".woff", ".woff2"}
+
+
+@app.before_request
+def _block_foreign_origins():
+    """Kisi dusri website se aaya POST (Origin header alag) seedha 403."""
+    if request.method == "POST" and request.path.startswith("/api/"):
+        origin = request.headers.get("Origin")
+        if origin and origin not in ALLOWED_ORIGINS:
+            return jsonify({"error": "Origin not allowed."}), 403
+
+
+@app.route("/")
+def index():
+    """Frontend isi server se serve hota hai (isse CORS ki zaroorat hi nahi)."""
+    if not (BASE_DIR / FRONTEND_FILE).exists():
+        return f"{FRONTEND_FILE} not found next to jervish.py", 404
+    return send_from_directory(BASE_DIR, FRONTEND_FILE)
+
+
+@app.route("/<path:filename>")
+def static_assets(filename):
+    """Frontend ke saath wali media/css/js files (jaise nova-bg.mp4). Python/.env files kabhi nahi."""
+    if Path(filename).suffix.lower() not in STATIC_EXTENSIONS:
+        return jsonify({"error": "Not found."}), 404
+    return send_from_directory(BASE_DIR, filename)
 
 
 @app.route("/api/command", methods=["POST"])
@@ -49,8 +100,9 @@ def api_command():
     try:
         # 👇 Yahan commands.py se import ki hui get_text_reply() use ho rahi hai
         reply = get_text_reply(text)
-    except Exception as e:
-        reply = f"Sorry, I couldn't reach the AI service. ({e})"
+    except Exception:
+        log.exception("api_command failed")
+        reply = "Sorry, something went wrong while handling that."
 
     audio_base64 = None
     audio_format = None
@@ -58,8 +110,8 @@ def api_command():
         audio_bytes, audio_format = get_audio_bytes(reply)
         if audio_bytes:
             audio_base64 = base64.b64encode(audio_bytes).decode("utf-8")
-    except Exception as e:
-        print(f"TTS generation failed: {e}")  # audio fail ho to bhi text reply to chala jaayega
+    except Exception:
+        log.exception("TTS generation failed")  # audio fail ho to bhi text reply to chala jaayega
 
     return jsonify({"reply": reply, "audio_base64": audio_base64, "audio_format": audio_format})
 
@@ -82,8 +134,9 @@ def api_stream():
             for sentence, audio, fmt in synthesize_stream(get_reply_stream(text)):
                 b64 = base64.b64encode(audio).decode("utf-8") if audio else None
                 yield json.dumps({"text": sentence, "audio_base64": b64, "audio_format": fmt}) + "\n"
-        except Exception as e:
-            yield json.dumps({"text": f"Sorry, something went wrong. ({e})", "audio_base64": None, "audio_format": None}) + "\n"
+        except Exception:
+            log.exception("api_stream failed")
+            yield json.dumps({"text": "Sorry, something went wrong.", "audio_base64": None, "audio_format": None}) + "\n"
         yield json.dumps({"done": True}) + "\n"
 
     return Response(
@@ -93,9 +146,19 @@ def api_stream():
     )
 
 
+@app.route("/api/focus", methods=["POST"])
+def api_focus():
+    """Wake word ("Nova") sunte hi frontend isse bolta hai: Nova window ko screen par aage laao."""
+    try:
+        ok = bool(return_to_nova())
+    except Exception:
+        log.exception("api_focus failed")
+        ok = False
+    return jsonify({"focused": ok})
+
+
 @app.route("/api/health", methods=["GET"])
 def api_health():
-    import os
     return jsonify({
         "status": "ok",
         "openrouter_key_loaded": bool(os.environ.get("OPENROUTER_API_KEY")),
@@ -107,9 +170,8 @@ def api_health():
 # CLI MODE — mic se wake-word bol ke wake karo
 # ============================================================
 def run_voice_loop():
-    print("Initializing Nexus.....")
-    speak("Hey Buddy How are you?.....")
-    speak("How can I help you?.....")
+    print(f"Initializing {ASSISTANT_NAME}.....")
+    speak(f"Hi, I'm {ASSISTANT_NAME}. How can I help you?")
 
     recognizer = sr.Recognizer()
     recognizer.pause_threshold = 1.5
@@ -133,14 +195,14 @@ def run_voice_loop():
     # hai taaki CPU zyada busy na rahe jab tak koi bulaye nahi.
     while True:
         try:
-            print("Waiting for wake word ('nova')...")
+            print(f"Waiting for wake word ({' / '.join(WAKE_WORDS)})...")
             with sr.Microphone() as source:
                 audio = recognizer.listen(source, timeout=4, phrase_time_limit=3)
 
             word = recognizer.recognize_google(audio)
             print(f"Heard: {word}")
 
-            if "nova" in word.lower() or "jervish" in word.lower():
+            if any(w in word.lower() for w in WAKE_WORDS):
                 speak("Yes? Go ahead, I'm listening.")
                 have_continuous_conversation(recognizer)
 
@@ -206,11 +268,54 @@ def have_continuous_conversation(recognizer):
             return
 
 
+# ============================================================
+# NOVA ko alag "app window" me kholna (Chrome/Edge --app mode)
+# Fayda: Nova ki apni window hoti hai, to command ke baad Windows us window ko
+# seedha front me la sakta hai. Normal browser tab me Windows sirf poori browser
+# window laa sakta hai, specific tab nahi. Band karna ho: .env me NOVA_APP_WINDOW=0
+# ============================================================
+def _find_browser_exe():
+    import shutil
+    candidates = [
+        os.path.expandvars(r"%ProgramFiles%\Google\Chrome\Application\chrome.exe"),
+        os.path.expandvars(r"%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe"),
+        os.path.expandvars(r"%LocalAppData%\Google\Chrome\Application\chrome.exe"),
+        os.path.expandvars(r"%ProgramFiles(x86)%\Microsoft\Edge\Application\msedge.exe"),
+        os.path.expandvars(r"%ProgramFiles%\Microsoft\Edge\Application\msedge.exe"),
+    ]
+    for c in candidates:
+        if os.path.isfile(c):
+            return c
+    return shutil.which("chrome") or shutil.which("msedge")
+
+
+def open_nova_window():
+    """Nova UI ko app-window me kholta hai. Browser na mile to normal tab me."""
+    import subprocess, webbrowser
+    url = f"http://{HOST}:{PORT}"
+    if os.environ.get("NOVA_APP_WINDOW", "1").strip().lower() in ("0", "false", "no", "off"):
+        webbrowser.open(url)
+        return
+    exe = _find_browser_exe()
+    try:
+        if exe:
+            subprocess.Popen([exe, f"--app={url}"])
+            return
+    except Exception as e:
+        print(f"App window nahi khuli ({e}); normal tab me khol raha hu.")
+    webbrowser.open(url)
+
+
 if __name__ == "__main__":
     # "python jervish.py web"  -> Flask server (frontend ke liye)
     # "python jervish.py"      -> purana mic-wala CLI mode
     if len(sys.argv) > 1 and sys.argv[1] == "web":
-        print("Starting Jervish web backend on http://127.0.0.1:5000 ...")
-        app.run(host="127.0.0.1", port=5000, debug=True)
+        print(f"Starting {ASSISTANT_NAME} web backend...")
+        print(f"Browser me kholo:  http://{HOST}:{PORT}   (HTML file double-click mat karo)")
+        # debug=False: debug mode me Werkzeug debugger arbitrary code run kar sakta hai,
+        # aur reloader server ko do baar start kar deta hai.
+        import threading
+        threading.Timer(1.5, open_nova_window).start()     # server ready hone ke baad Nova window kholo
+        app.run(host=HOST, port=PORT, debug=False, threaded=True)
     else:
         run_voice_loop()

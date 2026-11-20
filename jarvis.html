@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Nova - Voice assistant</title>
-  <meta name="theme-color" content="#0b0d1a" id="meta-theme">
+  <meta name="theme-color" content="#07070a" id="meta-theme">
   <script>
     /* Theme ko paint se pehle set karta hai (flash na ho). Saved choice > system setting. */
     (function () {
@@ -18,57 +18,63 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet">
   <style>
     :root {
-      /* ===== DARK THEME (default) ===== */
+      /* ===== DARK: "Obsidian & Ivory" ===== */
       color-scheme: dark;
-      --ink: #0b0d1a;
-      --surface: rgba(255, 255, 255, .045);
-      --surface-2: rgba(255, 255, 255, .08);
-      --line: rgba(255, 255, 255, .1);
-      --text: #eceefb;
-      --muted: #8a90ad;
-      --h: 200;
-      --as: 90%;
-      --al: 70%;
-      --accent: hsl(var(--h) var(--as) var(--al));
-      --accent-soft: hsl(var(--h) var(--as) var(--al) / .16);
-      --on-accent: #0b0d1a;
-      --danger: #ff6b85;
-      --chip-text: #cfd3ea;
-      --chip-hover-text: #ffffff;
-      --input-bg: rgba(0, 0, 0, .25);
-      --placeholder: #666d88;
-      --glow-1: hsl(var(--h) 80% 45% / .18);
-      --glow-2: rgba(120, 90, 255, .12);
-      --video-op: .28;
-      --card-shadow: none;
-      --font: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --ink: #07070a;
+      --surface: rgba(255, 248, 240, .04);
+      --surface-2: rgba(255, 248, 240, .075);
+      --line: rgba(255, 248, 240, .10);
+      --line-hi: rgba(255, 248, 240, .26);
+      --text: #f6f1ea;
+      --muted: #8f8a96;
+      --paper: #f6f1ea;
+      --on-paper: #0b0a0d;
+      --danger: #ff5a6e;
+      --danger-2: #ff9a5c;
+      --h1: 258;
+      --h2: 318;
+      --accent: hsl(var(--h1) 90% 70%);
+      --accent-soft: hsl(var(--h1) 90% 70% / .16);
+      --halo-1: hsl(var(--h1) 90% 58% / .24);
+      --halo-2: hsl(var(--h2) 90% 55% / .10);
+      --vignette: rgba(0, 0, 0, .55);
+      --input-bg: rgba(0, 0, 0, .0);
+      --placeholder: #6a6672;
+      --video-op: .18;
+      --grain: .08;
+      --card-shadow: 0 40px 90px -50px rgba(0, 0, 0, .95), inset 0 1px 0 rgba(255, 248, 240, .07);
+      --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+      --sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     }
 
-    /* ===== LIGHT THEME ===== */
+    /* ===== LIGHT: "Cream Paper" ===== */
     :root[data-theme="light"] {
       color-scheme: light;
-      --ink: #f3f5fc;
-      --surface: rgba(255, 255, 255, .66);
-      --surface-2: rgba(25, 32, 70, .055);
-      --line: rgba(25, 32, 70, .12);
-      --text: #161a33;
-      --muted: #596083;
-      --as: 78%;
-      --al: 42%;
-      --on-accent: #ffffff;
-      --danger: #d6385a;
-      --chip-text: #38405f;
-      --chip-hover-text: #161a33;
-      --input-bg: rgba(255, 255, 255, .75);
-      --placeholder: #8b92b0;
-      --glow-1: hsl(var(--h) 85% 68% / .34);
-      --glow-2: rgba(150, 120, 255, .20);
-      --video-op: .10;
-      --card-shadow: 0 18px 50px -28px rgba(30, 40, 100, .35);
+      --ink: #f4efe7;
+      --surface: rgba(255, 255, 255, .55);
+      --surface-2: rgba(40, 30, 20, .05);
+      --line: rgba(40, 30, 20, .12);
+      --line-hi: rgba(40, 30, 20, .3);
+      --text: #1a1612;
+      --muted: #7b7469;
+      --paper: #17130f;
+      --on-paper: #f6f1ea;
+      --danger: #d8344f;
+      --danger-2: #e8742f;
+      --accent: hsl(var(--h1) 75% 48%);
+      --accent-soft: hsl(var(--h1) 75% 48% / .14);
+      --halo-1: hsl(var(--h1) 90% 70% / .40);
+      --halo-2: hsl(var(--h2) 90% 72% / .26);
+      --vignette: rgba(0, 0, 0, 0);
+      --placeholder: #a39b8e;
+      --video-op: .06;
+      --grain: .06;
+      --card-shadow: 0 40px 80px -50px rgba(70, 50, 20, .45), inset 0 1px 0 rgba(255, 255, 255, .9);
     }
 
     * {
@@ -82,7 +88,7 @@
       height: 100%;
       background: var(--ink);
       color: var(--text);
-      font-family: var(--font);
+      font-family: var(--sans);
       -webkit-font-smoothing: antialiased
     }
 
@@ -105,7 +111,7 @@
     :focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 3px;
-      border-radius: 10px
+      border-radius: 12px
     }
 
     #video-bg {
@@ -114,33 +120,52 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      z-index: -3;
+      z-index: -5;
       opacity: var(--video-op);
-      filter: saturate(.7) blur(2px)
+      filter: saturate(.5) blur(3px)
     }
 
-    .wash {
+    .halo {
+      position: fixed;
+      z-index: -4;
+      left: 50%;
+      top: 40%;
+      width: 120vmin;
+      height: 120vmin;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(closest-side, var(--halo-1), var(--halo-2) 55%, transparent);
+      pointer-events: none
+    }
+
+    .vignette {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      background: radial-gradient(120% 90% at 50% 40%, transparent 45%, var(--vignette))
+    }
+
+    .grain {
       position: fixed;
       inset: 0;
       z-index: -2;
-      background:
-        radial-gradient(60% 55% at 38% 45%, var(--glow-1), transparent 70%),
-        radial-gradient(50% 50% at 90% 100%, var(--glow-2), transparent 70%),
-        var(--ink);
-      transition: background .8s
+      pointer-events: none;
+      opacity: var(--grain);
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")
     }
 
     .app {
       height: 100%;
       display: grid;
       grid-template-rows: auto 1fr;
-      gap: 14px;
-      padding: 18px 22px;
-      padding-top: max(18px, env(safe-area-inset-top));
-      padding-bottom: max(18px, env(safe-area-inset-bottom))
+      gap: 6px;
+      padding: 20px 28px 22px;
+      padding-top: max(20px, env(safe-area-inset-top));
+      padding-bottom: max(22px, env(safe-area-inset-bottom))
     }
 
-    /* top bar */
+    /* header */
     .top {
       display: flex;
       align-items: center;
@@ -150,59 +175,69 @@
 
     .brand {
       display: flex;
-      align-items: center;
+      align-items: baseline;
       gap: 12px
     }
 
-    .logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: conic-gradient(from 200deg, var(--accent), #8d6bff, var(--accent));
-      display: grid;
-      place-items: center;
-      transition: filter .6s
-    }
-
-    .logo::after {
-      content: "";
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: var(--ink)
-    }
-
     .brand b {
-      font-size: 19px;
-      font-weight: 700;
-      letter-spacing: -.01em;
-      display: block
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 34px;
+      letter-spacing: -.02em;
+      line-height: 1
+    }
+
+    .brand b::after {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-left: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 14px var(--accent)
     }
 
     .brand small {
-      font-size: 12.5px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
       color: var(--muted)
     }
 
-    .pills {
+    .right {
       display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end
+      align-items: center;
+      gap: 10px
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      padding: 4px 6px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 999px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px)
     }
 
     .pill {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 7px 13px;
-      border: 1px solid var(--line);
-      background: var(--surface);
-      border-radius: 999px;
-      font-size: 13px;
-      color: var(--muted);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px)
+      gap: 7px;
+      padding: 6px 12px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted)
+    }
+
+    .pill+.pill {
+      border-left: 1px solid var(--line)
     }
 
     .pill b {
@@ -211,124 +246,410 @@
     }
 
     .led {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: #7a8099
     }
 
     .led.ok {
-      background: #6df0b0;
-      box-shadow: 0 0 10px #6df0b0
+      background: #5dffb4;
+      box-shadow: 0 0 9px #5dffb4
     }
 
     .led.bad {
       background: var(--danger);
-      box-shadow: 0 0 10px var(--danger)
+      box-shadow: 0 0 9px var(--danger)
     }
 
     .led.wait {
-      background: #ffd166
+      background: #ffd166;
+      box-shadow: 0 0 9px #ffd166
     }
 
-    /* layout */
-    .main {
-      min-height: 0;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 380px;
-      gap: 16px
-    }
-
-    .stage,
-    .chat {
+    .icon-btn {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
       border: 1px solid var(--line);
       background: var(--surface);
-      border-radius: 28px;
-      box-shadow: var(--card-shadow);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      min-height: 0
-    }
-
-    /* stage */
-    .stage {
-      position: relative;
+      color: var(--text);
       display: grid;
-      grid-template-rows: 1fr auto auto;
-      justify-items: center;
-      padding: 22px 22px 24px;
-      overflow: hidden
+      place-items: center;
+      flex: none;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: border-color .2s, background .2s, transform .2s
     }
 
-    .orb-wrap {
-      position: relative;
-      width: 100%;
-      min-height: 0;
-      display: grid;
-      place-items: center
+    .icon-btn:hover {
+      border-color: var(--line-hi);
+      background: var(--surface-2)
     }
 
-    #orb {
-      width: 100%;
-      height: 100%;
-      max-height: 520px;
+    .icon-btn:active {
+      transform: scale(.92)
+    }
+
+    .icon-btn[aria-pressed="true"] {
+      border-color: var(--line-hi);
+      background: var(--surface-2)
+    }
+
+    .icon-btn svg {
+      width: 18px;
+      height: 18px
+    }
+
+    .icon-btn .i-moon {
+      display: none
+    }
+
+    :root[data-theme="light"] .icon-btn .i-sun {
+      display: none
+    }
+
+    :root[data-theme="light"] .icon-btn .i-moon {
       display: block
     }
 
-    .readout {
+    .badge {
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 6px;
-      text-align: center;
+      top: -3px;
+      right: -3px;
+      min-width: 17px;
+      height: 17px;
+      padding: 0 4px;
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--on-paper);
+      font-family: var(--mono);
+      font-size: 9.5px;
+      font-weight: 500;
+      display: none;
+      place-items: center
+    }
+
+    .badge.show {
+      display: grid
+    }
+
+    /* layout: stage + sliding chat drawer */
+    .main {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 0px;
+      gap: 0;
+      transition: grid-template-columns .55s cubic-bezier(.2, .8, .2, 1), gap .55s cubic-bezier(.2, .8, .2, 1)
+    }
+
+    .app.chat-open .main {
+      grid-template-columns: minmax(0, 1fr) 390px;
+      gap: 20px
+    }
+
+    .stage {
+      min-height: 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center
+    }
+
+    .orb-zone {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      min-height: 0
+    }
+
+    .rings {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none
     }
 
+    .rings circle {
+      fill: none;
+      stroke: var(--line);
+      stroke-width: 1;
+      vector-effect: non-scaling-stroke
+    }
+
+    .rings .dash {
+      stroke-dasharray: 2 7;
+      stroke: var(--line-hi);
+      transform-origin: 50% 50%;
+      transform-box: fill-box;
+      animation: rot 90s linear infinite
+    }
+
+    @keyframes rot {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    #orb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block
+    }
+
+    .orb-fb {
+      display: none;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      height: 42%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 32% 28%, #fff 0, hsl(var(--h2) 90% 70%) 22%, hsl(var(--h1) 85% 55%) 62%, hsl(var(--h1) 80% 25%));
+      box-shadow: 0 0 80px hsl(var(--h1) 90% 55% / .5)
+    }
+
+    .readout {
+      text-align: center;
+      padding: 0 12px;
+      margin-top: -6px;
+      max-width: 760px
+    }
+
     .readout h1 {
-      font-size: clamp(28px, 4vw, 44px);
-      font-weight: 500;
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(38px, 5.4vw, 68px);
       letter-spacing: -.03em;
-      line-height: 1.05
+      line-height: 1
     }
 
     .readout p {
-      margin-top: 8px;
+      margin-top: 10px;
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: .01em
+    }
+
+    .live-cap {
+      margin: 12px auto 0;
+      max-width: 560px;
+      min-height: 22px;
       font-size: 15px;
+      line-height: 1.5;
+      color: var(--text);
+      opacity: .0;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden
+    }
+
+    .live-cap[data-role="user"] {
+      color: var(--muted);
+      font-style: italic;
+      font-family: var(--serif);
+      font-size: 20px
+    }
+
+    .live-cap.in {
+      animation: capin .5s ease forwards
+    }
+
+    .live-cap.has {
+      opacity: 1
+    }
+
+    @keyframes capin {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+        filter: blur(4px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+        filter: none
+      }
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      justify-content: center;
+      margin-top: 18px;
+      max-width: 840px
+    }
+
+    .chip {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--muted);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: color .2s, border-color .2s, background .2s, transform .2s
+    }
+
+    .chip:hover {
+      color: var(--text);
+      border-color: var(--line-hi);
+      background: var(--surface-2);
+      transform: translateY(-2px)
+    }
+
+    .chip svg {
+      width: 14px;
+      height: 14px;
+      opacity: .8
+    }
+
+    .cap {
+      margin-top: 16px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
       color: var(--muted)
     }
 
-    .controls {
+    /* command dock */
+    .dock {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 14px;
-      margin-top: 20px
+      gap: 8px;
+      width: min(780px, 100%);
+      margin-top: 10px;
+      padding: 8px 8px 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      backdrop-filter: blur(28px) saturate(1.3);
+      -webkit-backdrop-filter: blur(28px) saturate(1.3);
+      box-shadow: var(--card-shadow)
+    }
+
+    .dock:focus-within {
+      border-color: var(--line-hi)
+    }
+
+    .wake {
+      flex: none;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color .2s, border-color .2s, background .2s
+    }
+
+    .wake:hover {
+      color: var(--text);
+      border-color: var(--line-hi)
+    }
+
+    .wake[aria-pressed="true"] {
+      color: var(--text);
+      background: var(--accent-soft);
+      border-color: var(--accent)
+    }
+
+    .wake[data-awake="1"] {
+      border-color: #34d98a;
+      box-shadow: 0 0 0 3px rgba(52, 217, 138, .15)
+    }
+
+    .wake[data-awake="0"] {
+      opacity: .75
+    }
+
+    .composer {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding-left: 10px
+    }
+
+    .composer input {
+      flex: 1;
+      min-width: 0;
+      background: none;
+      border: 0;
+      outline: 0;
+      font-size: 15px
+    }
+
+    .composer input::placeholder {
+      color: var(--placeholder)
+    }
+
+    .send {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      flex: none;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      transition: color .2s, border-color .2s, transform .2s
+    }
+
+    .send:hover {
+      color: var(--text);
+      border-color: var(--line-hi);
+      transform: translateX(2px)
+    }
+
+    .send svg {
+      width: 17px;
+      height: 17px
     }
 
     .mic {
       position: relative;
-      width: 76px;
-      height: 76px;
+      flex: none;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      color: var(--on-accent);
-      background: var(--accent);
-      box-shadow: 0 10px 40px -8px var(--accent);
-      transition: transform .2s, background .4s, box-shadow .4s
+      background: var(--paper);
+      color: var(--on-paper);
+      box-shadow: 0 10px 34px -8px hsl(var(--h1) 90% 60% / .75), inset 0 -4px 10px rgba(0, 0, 0, .12);
+      transition: transform .25s cubic-bezier(.3, 1.6, .5, 1), box-shadow .4s
     }
 
     .mic:hover {
-      transform: scale(1.06)
+      transform: scale(1.08)
     }
 
     .mic:active {
-      transform: scale(.96)
+      transform: scale(.94)
     }
 
     .mic svg {
-      width: 28px;
-      height: 28px
+      width: 24px;
+      height: 24px
     }
 
     .mic .stop {
@@ -336,8 +657,9 @@
     }
 
     .mic.active {
-      background: var(--danger);
-      box-shadow: 0 10px 40px -8px var(--danger)
+      background: linear-gradient(135deg, var(--danger), var(--danger-2));
+      color: #fff;
+      box-shadow: 0 10px 34px -6px var(--danger)
     }
 
     .mic.active .m {
@@ -351,92 +673,73 @@
     .mic.active::before {
       content: "";
       position: absolute;
-      inset: -8px;
+      inset: -7px;
       border-radius: 50%;
       border: 2px solid var(--danger);
-      animation: ring 1.4s ease-out infinite
+      animation: ring 1.5s ease-out infinite
     }
 
     @keyframes ring {
       from {
-        transform: scale(.9);
+        transform: scale(.92);
         opacity: .9
       }
 
       to {
-        transform: scale(1.5);
+        transform: scale(1.55);
         opacity: 0
       }
     }
 
-    .cap {
-      font-size: 13px;
-      color: var(--muted)
+    /* chat drawer */
+    .chat-wrap {
+      min-width: 0;
+      overflow: hidden;
+      border-radius: 30px
     }
 
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-      margin-top: 18px;
-      max-width: 640px
-    }
-
-    .chip {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 15px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: var(--surface);
-      font-size: 14px;
-      color: var(--chip-text);
-      transition: background .2s, border-color .2s, color .2s
-    }
-
-    .chip:hover {
-      background: var(--accent-soft);
-      border-color: var(--accent);
-      color: var(--chip-hover-text)
-    }
-
-    .chip svg {
-      width: 16px;
-      height: 16px;
-      opacity: .85
-    }
-
-    /* chat */
     .chat {
+      width: 390px;
+      height: 100%;
       display: flex;
       flex-direction: column;
-      overflow: hidden
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: var(--surface);
+      backdrop-filter: blur(28px) saturate(1.3);
+      -webkit-backdrop-filter: blur(28px) saturate(1.3);
+      box-shadow: var(--card-shadow)
     }
 
     .chat-head {
-      padding: 18px 20px 12px;
+      padding: 20px 22px 10px;
       display: flex;
       justify-content: space-between;
       align-items: center
     }
 
     .chat-head h2 {
-      font-size: 17px;
-      font-weight: 500;
-      letter-spacing: -.01em
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: -.02em
     }
 
     .clear {
-      font-size: 13px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
       color: var(--muted);
-      padding: 5px 10px;
-      border-radius: 999px
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid transparent
     }
 
     .clear:hover {
-      background: var(--surface-2);
+      border-color: var(--line);
       color: var(--text)
     }
 
@@ -444,7 +747,7 @@
       flex: 1;
       min-height: 0;
       overflow: auto;
-      padding: 4px 18px 14px;
+      padding: 4px 20px 20px;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -464,41 +767,45 @@
       margin: auto;
       text-align: center;
       color: var(--muted);
-      font-size: 14.5px;
-      line-height: 1.6;
+      font-size: 14px;
+      line-height: 1.65;
       max-width: 250px
     }
 
     .empty strong {
       display: block;
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
       color: var(--text);
-      font-weight: 500;
-      font-size: 16px;
-      margin-bottom: 6px
+      font-size: 26px;
+      margin-bottom: 6px;
+      letter-spacing: -.02em
     }
 
     .msg {
       max-width: 88%;
-      padding: 11px 14px;
-      border-radius: 18px;
+      padding: 11px 15px;
+      border-radius: 20px;
       font-size: 14.5px;
-      line-height: 1.5;
+      line-height: 1.55;
       overflow-wrap: anywhere;
-      animation: pop .25s ease
+      animation: pop .35s cubic-bezier(.2, 1, .3, 1)
     }
 
     @keyframes pop {
       from {
-        transform: translateY(6px);
+        transform: translateY(8px) scale(.98);
         opacity: 0
       }
     }
 
     .msg.user {
       align-self: flex-end;
-      background: var(--accent);
-      color: var(--on-accent);
-      border-bottom-right-radius: 6px
+      background: var(--paper);
+      color: var(--on-paper);
+      border-bottom-right-radius: 6px;
+      font-weight: 500
     }
 
     .msg.nova {
@@ -508,142 +815,83 @@
       border-bottom-left-radius: 6px
     }
 
-    .composer {
-      margin: 0 14px 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 6px 6px 16px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--input-bg)
-    }
-
-    .composer:focus-within {
-      border-color: var(--accent)
-    }
-
-    .composer input {
-      flex: 1;
-      min-width: 0;
-      background: none;
-      border: 0;
-      outline: 0;
-      font-size: 14.5px
-    }
-
-    .composer input::placeholder {
-      color: var(--placeholder)
-    }
-
-    .send {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: var(--on-accent);
-      display: grid;
-      place-items: center;
-      flex: none
-    }
-
-    .send svg {
-      width: 18px;
-      height: 18px
-    }
-
-    /* theme toggle */
-    .theme-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 1px solid var(--line);
-      background: var(--surface);
-      color: var(--text);
-      display: grid;
-      place-items: center;
-      flex: none;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      transition: background .2s, border-color .2s, transform .2s
-    }
-
-    .theme-btn:hover {
-      border-color: var(--accent);
-      background: var(--accent-soft)
-    }
-
-    .theme-btn:active {
-      transform: scale(.92)
-    }
-
-    .theme-btn svg {
-      width: 18px;
-      height: 18px
-    }
-
-    .theme-btn .i-moon {
-      display: none
-    }
-
-    :root[data-theme="light"] .theme-btn .i-sun {
-      display: none
-    }
-
-    :root[data-theme="light"] .theme-btn .i-moon {
-      display: block
-    }
-
     body,
-    .stage,
+    .dock,
     .chat,
-    .pill,
-    .composer,
+    .status,
     .msg {
       transition: background-color .35s, border-color .35s, color .35s
     }
 
     /* responsive */
-    @media(max-width:1000px) {
-      .main {
-        grid-template-columns: minmax(0, 1fr) 320px
+    @media(max-width:1100px) {
+      .app.chat-open .main {
+        grid-template-columns: minmax(0, 1fr) 340px
+      }
+
+      .chat {
+        width: 340px
       }
     }
 
     @media(max-width:820px) {
-      body {
-        overflow: auto
-      }
-
       .app {
-        height: auto;
-        min-height: 100dvh;
-        padding: 14px
+        padding: 14px 14px 16px
       }
 
-      .main {
-        grid-template-columns: 1fr
+      .main,
+      .app.chat-open .main {
+        grid-template-columns: 1fr;
+        gap: 0
       }
 
-      .stage {
-        min-height: 600px
+      .chat-wrap {
+        display: none;
+        position: fixed;
+        z-index: 20;
+        inset: 70px 10px 10px
+      }
+
+      .app.chat-open .chat-wrap {
+        display: block
       }
 
       .chat {
-        height: 440px
+        width: 100%;
+        background: var(--ink)
       }
 
-      .pills .pill:nth-child(3) {
+      .brand small,
+      .p-latency,
+      .p-session {
         display: none
       }
 
-      .brand small {
-        display: none
+      .chips {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        max-width: 100%;
+        scrollbar-width: none
+      }
+
+      .chip {
+        flex: none
+      }
+
+      .wake {
+        padding: 9px 10px
       }
     }
 
-    @media(max-width:480px) {
-      .pills .pill:nth-child(2) {
+    @media(max-width:520px) {
+
+      .p-engine,
+      .p-voice {
+        display: none
+      }
+
+      .readout p {
         display: none
       }
     }
@@ -655,7 +903,8 @@
       *::after {
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important
       }
     }
   </style>
@@ -665,21 +914,31 @@
   <video id="video-bg" autoplay muted loop playsinline preload="auto">
     <source src="nova-bg.mp4" type="video/mp4">
   </video>
-  <div class="wash"></div>
+  <div class="halo"></div>
+  <div class="vignette"></div>
+  <div class="grain"></div>
 
-  <div class="app">
+  <div class="app" id="app">
     <header class="top">
-      <div class="brand">
-        <div class="logo" id="logo" aria-hidden="true"></div>
-        <div><b>Nova</b><small>Voice assistant</small></div>
-      </div>
-      <div class="pills">
-        <div class="pill"><i class="led ok" id="led-engine"></i>Engine <b id="diag-engine">Standby</b></div>
-        <div class="pill"><i class="led wait" id="led-backend"></i>Backend <b id="diag-backend">Checking</b></div>
-        <div class="pill">Latency <b id="diag-latency">-</b></div>
-        <div class="pill">Voice <b id="diag-db">Silent</b></div>
-        <div class="pill">Session <b id="diag-time">00:00:00</b></div>
-        <button class="theme-btn" id="theme-btn" type="button" aria-label="Switch to light theme" title="Switch theme">
+      <div class="brand"><b>Nova</b><small>Voice assistant</small></div>
+      <div class="right">
+        <div class="status">
+          <div class="pill p-engine"><i class="led ok" id="led-engine"></i>Engine <b id="diag-engine">Standby</b></div>
+          <div class="pill p-backend"><i class="led wait" id="led-backend"></i>Backend <b id="diag-backend">Checking</b>
+          </div>
+          <div class="pill p-latency">Latency <b id="diag-latency">-</b></div>
+          <div class="pill p-voice">Voice <b id="diag-db">Silent</b></div>
+          <div class="pill p-session">Session <b id="diag-time">00:00:00</b></div>
+        </div>
+        <button class="icon-btn" id="chat-btn" type="button" aria-pressed="false" aria-label="Toggle conversation"
+          title="Conversation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-5.4A8 8 0 1 1 21 12z" />
+          </svg>
+          <span class="badge" id="chat-badge">0</span>
+        </button>
+        <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch to light theme" title="Switch theme">
           <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="4" />
@@ -696,27 +955,20 @@
 
     <div class="main">
       <section class="stage" aria-label="Nova">
-        <div class="orb-wrap">
+        <div class="orb-zone" id="orb-zone">
+          <svg class="rings" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <circle cx="50" cy="50" r="26" />
+            <circle cx="50" cy="50" r="35" class="dash" />
+            <circle cx="50" cy="50" r="46" />
+          </svg>
           <canvas id="orb" aria-hidden="true"></canvas>
-          <div class="readout">
-            <h1 id="core-word">Ready when you are</h1>
-            <p id="core-sub">Press the mic and say a command</p>
-          </div>
+          <div class="orb-fb" id="orb-fb"></div>
         </div>
 
-        <div class="controls">
-          <button class="mic" id="mic-btn" aria-label="Start listening">
-            <svg class="m" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
-              <path d="M19 11a7 7 0 0 1-14 0" />
-              <path d="M12 18v4" />
-            </svg>
-            <svg class="stop" viewBox="0 0 24 24" fill="currentColor">
-              <rect x="6" y="6" width="12" height="12" rx="3" />
-            </svg>
-          </button>
-          <div class="cap" id="mic-caption">Tap to speak</div>
+        <div class="readout">
+          <h1 id="core-word">Ready when you are</h1>
+          <p id="core-sub">Press the mic and say a command</p>
+          <div class="live-cap" id="live-cap" aria-hidden="true"></div>
         </div>
 
         <div class="chips" id="chips">
@@ -757,24 +1009,45 @@
               <path d="M14 3v5h5M9 13h6M9 17h4" />
             </svg>Generate a page</button>
         </div>
+
+        <div class="cap" id="mic-caption">Tap to speak</div>
+
+        <div class="dock">
+          <button class="wake" id="wake-btn" type="button" aria-pressed="false"
+            title="Always listen for the word Nova, even when the window is in the background">Hey Nova: off</button>
+          <form class="composer" id="composer" autocomplete="off">
+            <input id="text-input" type="text" placeholder="Type a command or press the mic"
+              aria-label="Type a command">
+            <button class="send" type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg></button>
+          </form>
+          <button class="mic" id="mic-btn" aria-label="Start listening">
+            <svg class="m" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+              <path d="M19 11a7 7 0 0 1-14 0" />
+              <path d="M12 18v4" />
+            </svg>
+            <svg class="stop" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="6" width="12" height="12" rx="3" />
+            </svg>
+          </button>
+        </div>
       </section>
 
-      <aside class="chat" aria-label="Conversation">
-        <div class="chat-head">
-          <h2>Conversation</h2><button class="clear" id="clear">Clear</button>
-        </div>
-        <div class="log" id="transcript" aria-live="polite">
-          <div class="empty" id="transcript-empty"><strong>Nothing here yet</strong>Say a command or type one below.
-            Starting with "Nova" or "Jarvis" works too.</div>
-        </div>
-        <form class="composer" id="composer" autocomplete="off">
-          <input id="text-input" type="text" placeholder="Type a command" aria-label="Type a command">
-          <button class="send" type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg></button>
-        </form>
-      </aside>
+      <div class="chat-wrap">
+        <aside class="chat" aria-label="Conversation">
+          <div class="chat-head">
+            <h2>Conversation</h2><button class="clear" id="clear">Clear</button>
+          </div>
+          <div class="log" id="transcript" aria-live="polite">
+            <div class="empty" id="transcript-empty"><strong>Nothing here yet</strong>Say a command or type one below.
+              Starting with "Nova" or "Jarvis" works too.</div>
+          </div>
+        </aside>
+      </div>
     </div>
   </div>
 
@@ -785,6 +1058,7 @@
       const transcript = $('transcript'), transcriptEmpty = $('transcript-empty');
       const diagEngine = $('diag-engine'), diagBackend = $('diag-backend'), diagLatency = $('diag-latency'), diagTime = $('diag-time');
       const ledBackend = $('led-backend'), textInput = $('text-input'), diagDb = $('diag-db');
+      const liveCap = $('live-cap'), chatBtn = $('chat-btn'), chatBadge = $('chat-badge'), appEl = $('app');
       const root = document.documentElement;
 
       /* Theme (dark / light) */
@@ -794,7 +1068,7 @@
       function applyTheme(t, persist) {
         isLight = t === 'light';
         root.setAttribute('data-theme', t);
-        if (metaTheme) metaTheme.setAttribute('content', isLight ? '#f3f5fc' : '#0b0d1a');
+        if (metaTheme) metaTheme.setAttribute('content', isLight ? '#f4efe7' : '#07070a');
         const label = isLight ? 'Switch to dark theme' : 'Switch to light theme';
         themeBtn.setAttribute('aria-label', label);
         themeBtn.title = label;
@@ -810,6 +1084,14 @@
         });
       } catch (e) { }
 
+      /* Chat drawer */
+      function setChat(open) {
+        appEl.classList.toggle('chat-open', open);
+        chatBtn.setAttribute('aria-pressed', open ? 'true' : 'false');
+      }
+      chatBtn.addEventListener('click', () => setChat(!appEl.classList.contains('chat-open')));
+      if (innerWidth >= 1280) setChat(true);
+
       /* Session timer */
       const sessionStart = Date.now();
       setInterval(() => {
@@ -818,12 +1100,12 @@
         diagTime.textContent = p(Math.floor(t / 3600)) + ':' + p(Math.floor(t % 3600 / 60)) + ':' + p(t % 60);
       }, 1000);
 
-      /* State */
+      /* State. A/B/C = blob colours (rgb 0..1); h1/h2 = matching hues for the page glow */
       const STATES = {
-        idle: { word: 'Ready when you are', sub: 'Press the mic and say a command', h: 200, speed: .0035, amp: .025, spin: 0 },
-        listening: { word: 'Listening', sub: 'Go ahead, I am all ears', h: 155, speed: .007, amp: .10, spin: 0 },
-        thinking: { word: 'Working on it', sub: 'One moment', h: 268, speed: .028, amp: .045, spin: 1 },
-        speaking: { word: 'Speaking', sub: 'Playing the reply', h: 32, speed: .010, amp: .14, spin: 0 }
+        idle: { word: 'Ready when you are', sub: 'Press the mic and say a command', h1: 258, h2: 318, spin: .35, A: [.30, .35, 1.0], B: [.75, .35, 1.0], C: [1.0, .62, .80] },
+        listening: { word: 'Listening', sub: 'Go ahead, I am all ears', h1: 168, h2: 205, spin: .7, A: [.08, .85, .80], B: [.28, .58, 1.0], C: [.72, 1.0, .72] },
+        thinking: { word: 'Working on it', sub: 'One moment', h1: 285, h2: 335, spin: 2.2, A: [.55, .20, 1.0], B: [1.0, .20, .70], C: [.30, .80, 1.0] },
+        speaking: { word: 'Speaking', sub: 'Playing the reply', h1: 22, h2: 342, spin: 1.0, A: [1.0, .45, .20], B: [1.0, .25, .50], C: [1.0, .85, .45] }
       };
       let state = 'idle';
       function setState(s) {
@@ -863,112 +1145,213 @@
         micStream = null; micAnalyser = null;
       }
 
-      /* Orb */
-      const cv = $('orb'), ctx = cv.getContext('2d');
+      /* ================= 3D CORE: "Liquid Nova" =================
+         A real-time raymarched liquid-metal orb (WebGL fragment shader, no libraries).
+         It melts and ripples with your voice, glows with a thin-film iridescent skin and
+         throws off three little droplets that orbit and merge back into the body. */
+      const cv = $('orb'), zone = $('orb-zone'), fb = $('orb-fb');
       const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
-      const N = 460, pts = [];
-      for (let i = 0; i < N; i++) {
-        const y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), th = i * 2.399963;
-        pts.push({ x: Math.cos(th) * r, y: y, z: Math.sin(th) * r, s: Math.random() * 6.28 });
-      }
-      let W = 0, H = 0, dpr = 1;
+      const VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+      const FS = `
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+uniform vec2 uRes; uniform float uTime, uLvl, uLight; uniform vec3 uA, uB, uC; uniform vec2 uMouse;
+
+float hash(vec3 p){ p = fract(p*.3183099 + .1); p *= 17.; return fract(p.x*p.y*p.z*(p.x+p.y+p.z)); }
+float noise(vec3 x){
+  vec3 i = floor(x), f = fract(x); f = f*f*(3.-2.*f);
+  return mix(mix(mix(hash(i), hash(i+vec3(1,0,0)), f.x), mix(hash(i+vec3(0,1,0)), hash(i+vec3(1,1,0)), f.x), f.y),
+             mix(mix(hash(i+vec3(0,0,1)), hash(i+vec3(1,0,1)), f.x), mix(hash(i+vec3(0,1,1)), hash(i+vec3(1,1,1)), f.x), f.y), f.z);
+}
+float smin(float a, float b, float k){ float h = clamp(.5 + .5*(b-a)/k, 0., 1.); return mix(b, a, h) - k*h*(1.-h); }
+mat2 rot(float a){ float s = sin(a), c = cos(a); return mat2(c, -s, s, c); }
+
+float map(vec3 p){
+  float t = uTime;
+  vec3 q = p*1.35 + vec3(0., t*.55, t*.38);
+  float n = noise(q)*.58 + noise(q*2.1 + 7.)*.27 + noise(q*4.3 - t*.4)*.10*(.3+uLvl);
+  float amp = .20 + uLvl*.50;
+  float d = length(p) - 1. - (n - .475)*amp*1.7 - uLvl*.10;
+  for(int i = 0; i < 3; i++){
+    float fi = float(i);
+    float a = t*(.55 + fi*.21) + fi*2.094;
+    float r = 1.55 + .22*sin(t*.8 + fi*1.7) + uLvl*.25;
+    vec3 o = vec3(cos(a)*r, sin(a*1.3 + fi)*.75, sin(a)*r);
+    d = smin(d, length(p - o) - (.17 - fi*.025), .38);
+  }
+  return d;
+}
+vec3 calcN(vec3 p){
+  vec2 e = vec2(.004, 0.);
+  return normalize(vec3(map(p+e.xyy)-map(p-e.xyy), map(p+e.yxy)-map(p-e.yxy), map(p+e.yyx)-map(p-e.yyx)));
+}
+
+void main(){
+  vec2 uv = (gl_FragCoord.xy*2. - uRes) / min(uRes.x, uRes.y);
+  vec3 ro = vec3(0., 0., 3.6), rd = normalize(vec3(uv, -1.5));
+  ro.xz *= rot(uMouse.x*.5); rd.xz *= rot(uMouse.x*.5);
+  ro.yz *= rot(-uMouse.y*.35); rd.yz *= rot(-uMouse.y*.35);
+
+  float t = 0., dmin = 10.; bool hit = false;
+  for(int i = 0; i < 64; i++){
+    vec3 p = ro + rd*t;
+    float d = map(p);
+    dmin = min(dmin, d);
+    if(d < .002){ hit = true; break; }
+    t += d*.62;
+    if(t > 7.) break;
+  }
+
+  vec3 glowC = mix(uA, uB, .5 + .5*sin(uTime*.3 + rd.x*2.));
+  if(!hit){
+    float g = exp(-max(dmin, 0.)*3.4) * (.46 + uLvl*.9);
+    g *= mix(1., .55, uLight);
+    g *= smoothstep(1., .55, max(abs(uv.x), abs(uv.y)));   /* glow canvas ke kinare par fade ho */
+    gl_FragColor = vec4(glowC*g, g);
+    return;
+  }
+
+  vec3 p = ro + rd*t, n = calcN(p), v = -rd;
+  float ndv = max(dot(n, v), 0.);
+  float fres = pow(1. - ndv, 2.4);
+
+  float g = n.y*.5 + .5;
+  vec3 base = mix(uA, uB, smoothstep(0., 1., g + .35*sin(n.x*2.2 + uTime*.45)));
+  base = mix(base, uC, clamp(fres*.95 + .22*smoothstep(.55, 1., n.x*.5 + .5), 0., 1.));
+  vec3 film = .5 + .5*cos(6.2831*(vec3(0., .33, .67) + fres*1.25 + n.z*.35 + uTime*.05));
+  base = mix(base, film, .22*fres + .07);
+  base *= mix(1., .86, uLight);
+
+  vec3 l1 = normalize(vec3(-.55, .8, .75));
+  vec3 l2 = normalize(vec3(.85, -.35, .45));
+  float diff = max(dot(n, l1), 0.);
+  float spec = pow(max(dot(n, normalize(l1 + v)), 0.), 110.);
+  float spec2 = pow(max(dot(n, normalize(l2 + v)), 0.), 45.)*.55;
+  float sss = smoothstep(.0, 1.2, 1.2 - length(p))*.35;
+
+  vec3 col = base*(.30 + .80*diff + sss) + spec*vec3(1.) + spec2*uC + fres*uC*.55;
+  col = pow(clamp(col, 0., 1.), vec3(.93));
+
+  /* soft luminous rim: hides aliasing, melts into the glow */
+  float edge = smoothstep(0., .2, ndv);
+  col = mix(glowC*.95, col, edge);
+  gl_FragColor = vec4(col, 1.);
+}`;
+
+      let gl = null, U = {}, T = 0, glOK = false;
+      (function initGL() {
+        try {
+          gl = cv.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false, powerPreference: 'high-performance' })
+            || cv.getContext('experimental-webgl', { alpha: true, premultipliedAlpha: true });
+        } catch (e) { gl = null }
+        if (!gl) return;
+        const sh = (type, src) => {
+          const o = gl.createShader(type); gl.shaderSource(o, src); gl.compileShader(o);
+          if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) { console.warn(gl.getShaderInfoLog(o)); return null }
+          return o;
+        };
+        const vs = sh(gl.VERTEX_SHADER, VS), fs = sh(gl.FRAGMENT_SHADER, FS);
+        if (!vs || !fs) return;
+        const pr = gl.createProgram();
+        gl.attachShader(pr, vs); gl.attachShader(pr, fs); gl.linkProgram(pr);
+        if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) { console.warn(gl.getProgramInfoLog(pr)); return }
+        gl.useProgram(pr);
+        const buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+        const loc = gl.getAttribLocation(pr, 'p');
+        gl.enableVertexAttribArray(loc);
+        gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+        ['uRes', 'uTime', 'uLvl', 'uLight', 'uA', 'uB', 'uC', 'uMouse'].forEach(n => U[n] = gl.getUniformLocation(pr, n));
+        glOK = true;
+      })();
+      if (!glOK) { cv.style.display = 'none'; fb.style.display = 'block' }   // WebGL nahi to CSS orb
+
+      let cw = 0, ch = 0;
       function resize() {
-        dpr = Math.min(devicePixelRatio || 1, 2);
-        const b = cv.getBoundingClientRect();
-        W = b.width; H = b.height;
-        cv.width = W * dpr; cv.height = H * dpr;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const b = zone.getBoundingClientRect();
+        let d = Math.min(devicePixelRatio || 1, 1.5);
+        const px = b.width * b.height * d * d;
+        if (px > 1.3e6) d *= Math.sqrt(1.3e6 / px);          // GPU par bojh kam rakho
+        cw = Math.max(2, Math.round(b.width * d)); ch = Math.max(2, Math.round(b.height * d));
+        cv.width = cw; cv.height = ch;
       }
-      addEventListener('resize', resize); resize();
-      const cur = { h: 200, speed: .0035, amp: .025 };
-      let ang = 0, tilt = .35, t = 0, fr = 0, lvl = 0;
+      try { new ResizeObserver(resize).observe(zone) } catch (e) { addEventListener('resize', resize) }
+      resize();
+
+      let mx = 0, my = 0, smx = 0, smy = 0;
+      document.addEventListener('pointermove', e => { mx = (e.clientX / innerWidth - .5) * 2; my = (e.clientY / innerHeight - .5) * 2 });
+
+      const cur = { h1: 258, h2: 318, spin: .35, A: [.3, .35, 1], B: [.75, .35, 1], C: [1, .62, .8] };
+      let fr = 0, lvl = 0, last = performance.now();
       const fbuf = new Uint8Array(256), tbuf = new Uint8Array(512);
       function sample() {
         const an = state === 'listening' ? micAnalyser : state === 'speaking' ? outAnalyser : null;
-        if (!an) { fbuf.fill(0); return { rms: 0, live: false } }
+        if (!an) { return { rms: 0, live: false } }
         an.getByteFrequencyData(fbuf);
         an.getByteTimeDomainData(tbuf);
         let sum = 0;
         for (let i = 0; i < tbuf.length; i++) { const v = (tbuf[i] - 128) / 128; sum += v * v }
         return { rms: Math.sqrt(sum / tbuf.length), live: true };
       }
-      function frame() {
+      function frame(now) {
+        const dt = Math.min(.05, (now - last) / 1000 || .016); last = now; fr++;
         const c = STATES[state];
-        cur.h += (c.h - cur.h) * .04;
-        cur.speed += (c.speed - cur.speed) * .05;
-        cur.amp += (c.amp - cur.amp) * .06;
-        root.style.setProperty('--h', cur.h.toFixed(1));
-        t += reduce ? 0 : .016;
-        fr++;
+        cur.h1 += (c.h1 - cur.h1) * .045;
+        cur.h2 += (c.h2 - cur.h2) * .045;
+        cur.spin += (c.spin - cur.spin) * .04;
+        for (let i = 0; i < 3; i++) {
+          cur.A[i] += (c.A[i] - cur.A[i]) * .05;
+          cur.B[i] += (c.B[i] - cur.B[i]) * .05;
+          cur.C[i] += (c.C[i] - cur.C[i]) * .05;
+        }
+        if (fr % 3 === 0) {
+          root.style.setProperty('--h1', cur.h1.toFixed(1));
+          root.style.setProperty('--h2', cur.h2.toFixed(1));
+        }
+        if (!reduce) T += dt * cur.spin;
 
         /* loudness: dBFS from the signal, mapped to 0..1 */
         const sm = sample();
         const db = sm.rms > .0005 ? 20 * Math.log10(sm.rms) : -90;
         let target = sm.live ? Math.min(1, Math.max(0, (db + 52) / 36)) : 0;
         if (target < .08) target = 0;
-        if (state === 'speaking' && !sm.live) target = .3 + .3 * Math.pow(Math.sin(t * 7), 2);
+        if (state === 'speaking' && !sm.live) target = .3 + .3 * Math.pow(Math.sin(T * 7), 2);
         lvl += (target - lvl) * (target > lvl ? .4 : .1);
         if (fr % 6 === 0) diagDb.textContent = (sm.live && lvl > .02) ? Math.round(db) + ' dB' : 'Silent';
 
-        ang += reduce ? 0 : cur.speed + lvl * .012;
-        ctx.clearRect(0, 0, W, H);
-        const cx = W / 2, cy = H * .44, R = Math.min(W * .28, H * .28, 160);
-        const g = ctx.createRadialGradient(cx, cy, R * .2, cx, cy, R * 2.1);
-        g.addColorStop(0, isLight ? 'hsla(' + cur.h + ',85%,60%,' + (.16 + lvl * .30) + ')' : 'hsla(' + cur.h + ',90%,62%,' + (.2 + lvl * .35) + ')');
-        g.addColorStop(1, 'hsla(' + cur.h + ',90%,50%,0)');
-        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+        smx += (mx - smx) * .05; smy += (my - smy) * .05;
 
-        /* radial spectrum bars */
-        const NB = 72, br = R * (1 + lvl * .15);
-        ctx.lineCap = 'round'; ctx.lineWidth = 3;
-        for (let i = 0; i < NB; i++) {
-          const k = Math.min(i, NB - i);
-          const mag = (fbuf[2 + Math.floor(k * 2.4)] || 0) / 255;
-          const len = 3 + mag * R * .3;
-          const an = i / NB * 6.2832 - 1.5708, co = Math.cos(an), si = Math.sin(an);
-          ctx.strokeStyle = (isLight ? 'hsla(' + cur.h + ',80%,42%,' : 'hsla(' + cur.h + ',90%,72%,') + (.22 + mag * .78) + ')';
-          ctx.beginPath();
-          ctx.moveTo(cx + co * br, cy + si * br);
-          ctx.lineTo(cx + co * (br + len), cy + si * (br + len));
-          ctx.stroke();
-        }
-
-        /* particle sphere, size and wobble follow loudness */
-        const amp = cur.amp + lvl * .3;
-        const ca = Math.cos(ang), sa = Math.sin(ang), ct = Math.cos(tilt), st = Math.sin(tilt);
-        const out = [];
-        for (const p of pts) {
-          const x = p.x * ca - p.z * sa, z = p.x * sa + p.z * ca, y = p.y;
-          const y2 = y * ct - z * st, z2 = y * st + z * ct;
-          const wob = 1 + amp * Math.sin(t * (state === 'thinking' ? 6 : 3) + p.s + y * 4) * (.6 + lvl * .8);
-          const k = R * wob * (1 + lvl * .18), per = 1 / (1.9 - z2 * .55);
-          out.push({ x: cx + x * k * per * 1.5, y: cy + y2 * k * per * 1.5, z: z2 });
-        }
-        out.sort((a, b) => a.z - b.z);
-        for (const o of out) {
-          const d = (o.z + 1) / 2;
-          ctx.globalAlpha = .18 + d * .82;
-          ctx.fillStyle = isLight
-            ? 'hsl(' + (cur.h + d * 40) + ',80%,' + (58 - d * 22) + '%)'
-            : 'hsl(' + (cur.h + d * 40) + ',90%,' + (55 + d * 25) + '%)';
-          ctx.beginPath(); ctx.arc(o.x, o.y, .8 + d * 2.2 + lvl * d * 1.2, 0, 6.283); ctx.fill();
-        }
-        ctx.globalAlpha = 1;
-
-        /* ripples that grow with volume */
-        if (lvl > .05) {
-          for (let i = 0; i < 2; i++) {
-            const ph = ((t * .7 + i * .5) % 1);
-            ctx.strokeStyle = (isLight ? 'hsla(' + cur.h + ',80%,45%,' : 'hsla(' + cur.h + ',90%,70%,') + (1 - ph) * (.15 + lvl * .5) + ')';
-            ctx.lineWidth = 1.5;
-            ctx.beginPath(); ctx.arc(cx, cy, R * (1.45 + ph * (.2 + lvl * .6)), 0, 6.283); ctx.stroke();
-          }
+        if (glOK) {
+          gl.viewport(0, 0, cw, ch);
+          gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+          gl.uniform2f(U.uRes, cw, ch);
+          gl.uniform1f(U.uTime, T);
+          gl.uniform1f(U.uLvl, lvl);
+          gl.uniform1f(U.uLight, isLight ? 1 : 0);
+          gl.uniform3f(U.uA, cur.A[0], cur.A[1], cur.A[2]);
+          gl.uniform3f(U.uB, cur.B[0], cur.B[1], cur.B[2]);
+          gl.uniform3f(U.uC, cur.C[0], cur.C[1], cur.C[2]);
+          gl.uniform2f(U.uMouse, smx, smy);
+          gl.drawArrays(gl.TRIANGLES, 0, 3);
+        } else {
+          fb.style.transform = 'translate(-50%,-50%) scale(' + (1 + lvl * .22 + Math.sin(T * 2) * .02).toFixed(3) + ')';
         }
         requestAnimationFrame(frame);
       }
-      frame();
+      requestAnimationFrame(frame);
 
-      /* Transcript */
+      /* Transcript + live caption */
+      let msgCount = 0;
+      function setCap(role, text, animate) {
+        liveCap.dataset.role = role;
+        liveCap.textContent = text;
+        liveCap.classList.add('has');
+        if (animate) { liveCap.classList.remove('in'); void liveCap.offsetWidth; liveCap.classList.add('in') }
+      }
       function addMessage(role, text) {
         transcriptEmpty.style.display = 'none';
         const d = document.createElement('div');
@@ -976,10 +1359,17 @@
         d.textContent = text;
         transcript.appendChild(d);
         transcript.scrollTop = transcript.scrollHeight;
+        msgCount++;
+        chatBadge.textContent = msgCount > 99 ? '99+' : msgCount;
+        chatBadge.classList.add('show');
+        setCap(role === 'user' ? 'user' : 'nova', text, true);
+        return d;
       }
       $('clear').addEventListener('click', () => {
         transcript.querySelectorAll('.msg').forEach(m => m.remove());
         transcriptEmpty.style.display = '';
+        msgCount = 0; chatBadge.classList.remove('show');
+        liveCap.textContent = ''; liveCap.classList.remove('has', 'in');
       });
 
       /* Backend */
@@ -1047,11 +1437,191 @@
         }
       }
 
+      /* Streaming: backend jawab tukdon (sentence by sentence) me bhejta hai. Pehla tukda aate hi
+         bolna shuru, baaki line me. Lambe commands (jaise Notepad) ki beech ki lines
+         ("Please wait, I'm thinking...") bhi turant sunayi deti hain. */
+      const STREAM_URL = 'http://127.0.0.1:5000/api/stream';
+
+      async function streamCommand(raw, onDone, t0) {
+        setBackend('Contacting', 'wait');
+        setState('thinking');
+        if (currentAudio) { currentAudio.pause(); currentAudio = null }
+
+        const queue = [];
+        let playing = false, streamDone = false, finished = false, bubble = null, gotAudio = false;
+
+        function finish() {
+          if (finished) return;
+          finished = true;
+          outAnalyser = null;
+          setState('idle');
+          if (onDone) onDone();
+        }
+
+        function addText(text) {
+          if (!bubble) bubble = addMessage('nova', text);
+          else { bubble.textContent += ' ' + text; transcript.scrollTop = transcript.scrollHeight; setCap('nova', bubble.textContent, false) }
+        }
+
+        function playNext() {
+          if (playing || finished) return;
+          const item = queue.shift();
+          if (!item) {
+            if (streamDone) finish();
+            else if (gotAudio) setState('thinking');   // agla tukda abhi ban raha hai
+            return;
+          }
+          playing = true;
+          setState('speaking');
+          const next = () => { outAnalyser = null; playing = false; playNext() };
+          if (!item.audio_base64) { next(); return }
+          const mime = item.audio_format === 'wav' ? 'audio/wav' : 'audio/mpeg';
+          const a = new Audio('data:' + mime + ';base64,' + item.audio_base64);
+          currentAudio = a;
+          try {
+            const ac = getCtx();
+            const src = ac.createMediaElementSource(a);
+            outAnalyser = ac.createAnalyser();
+            outAnalyser.fftSize = 512;
+            outAnalyser.smoothingTimeConstant = .5;
+            src.connect(outAnalyser);
+            outAnalyser.connect(ac.destination);
+          } catch (e) { outAnalyser = null }
+          if (!gotAudio) { gotAudio = true; diagLatency.textContent = Math.round(performance.now() - t0) + ' ms' }
+          a.onended = next;
+          a.onerror = next;
+          a.play().catch(next);
+        }
+
+        try {
+          const res = await fetch(STREAM_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: raw })
+          });
+          if (res.status === 404) {            // purana backend (sirf /api/command) -> purana tareeka
+            const r = await processCommand(raw);
+            diagLatency.textContent = Math.round(performance.now() - t0) + ' ms';
+            speak(r, onDone);
+            return;
+          }
+          if (!res.ok || !res.body) throw new Error('HTTP ' + res.status);
+          setBackend('Connected', 'ok');
+
+          const reader = res.body.getReader();
+          const decoder = new TextDecoder();
+          let buf = '';
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            buf += decoder.decode(value, { stream: true });
+            let nl;
+            while ((nl = buf.indexOf('\n')) >= 0) {
+              const line = buf.slice(0, nl).trim();
+              buf = buf.slice(nl + 1);
+              if (!line) continue;
+              let item;
+              try { item = JSON.parse(line) } catch (e) { continue }
+              if (item.done) { streamDone = true; continue }
+              if (item.text) addText(item.text);
+              queue.push(item);
+              playNext();
+            }
+          }
+        } catch (err) {
+          setBackend('Offline', 'bad');
+          addText("I can't reach the AI backend right now. Make sure jervish.py is running with 'python jervish.py web'.");
+        }
+        streamDone = true;
+        playNext();
+        if (!playing && !queue.length) finish();
+      }
+
       /* One pipeline for voice, typed text and chips */
       let convoActive = false, recognizing = false, recognizer = null;
 
+      /* "Hey Nova" mode: mic hamesha sunta hai. Soya hua ho to sirf wake word ("Nova") pe jaagta hai,
+         Nova window ko screen par aage laata hai, aur SLEEP_AFTER_MS tak kuch na bolo to wapas so jaata hai. */
+      const WAKE_RX = /\b(?:(?:hey|ok|okay|hi)\s+)?(?:nova|novah|jervish|jarvis)\b[\s,.!?:;-]*/i;
+      const SLEEP_AFTER_MS = 30000;
+      const FOCUS_URL = STREAM_URL.replace('/stream', '/focus');
+      const wakeBtn = $('wake-btn');
+      let wakeMode = false, awake = true, busy = false, sleepTimer = null, restartTimer = null;
+
+      function focusNova() {
+        fetch(FOCUS_URL, { method: 'POST' }).catch(() => { });
+      }
+      /* Chhoti beep: jaagne par upar wali (do tone), sone par neeche wali. Awaaz na aaye to bhi button ka status dikhta hai. */
+      function chime(up) {
+        try {
+          const ac = getCtx(), t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+          o.type = 'sine';
+          o.frequency.setValueAtTime(up ? 660 : 880, t);
+          o.frequency.setValueAtTime(up ? 990 : 550, t + .13);
+          g.gain.setValueAtTime(.0001, t);
+          g.gain.exponentialRampToValueAtTime(.3, t + .02);
+          g.gain.exponentialRampToValueAtTime(.0001, t + .32);
+          o.connect(g); g.connect(ac.destination);
+          o.start(t); o.stop(t + .34);
+        } catch (e) { }
+      }
+      function showCaption() {
+        if (wakeMode) {
+          wakeBtn.textContent = awake ? '● Hey Nova: awake' : '○ Hey Nova: sleeping';
+          wakeBtn.dataset.awake = awake ? '1' : '0';
+        }
+        if (wakeMode && !awake) {
+          micCaption.textContent = 'Sleeping. Say "Nova" to wake me';
+          coreSub.textContent = 'Say "Nova" to wake me';
+        } else if (recognizing) {
+          micCaption.textContent = (convoActive || wakeMode) ? 'Listening, conversation is on' : 'Listening';
+        } else {
+          micCaption.textContent = 'Tap to speak';
+        }
+      }
+      function armSleepTimer() {
+        clearTimeout(sleepTimer);
+        if (wakeMode && awake) sleepTimer = setTimeout(goToSleep, SLEEP_AFTER_MS);
+      }
+      function stopRecognizer() {
+        clearTimeout(restartTimer);
+        if (recognizer && recognizing) { try { recognizer.stop() } catch (e) { } }
+      }
+      function startRecognizer() {
+        if (!recognizer || busy || recognizing) return;
+        recognizer.continuous = wakeMode;
+        try { recognizer.start() } catch (e) {
+          clearTimeout(restartTimer);
+          restartTimer = setTimeout(startRecognizer, 400);   // pichla session abhi band ho raha hai
+        }
+      }
       function resumeListening() {
-        if (convoActive && recognizer) { try { recognizer.start() } catch (e) { } }
+        busy = false;
+        armSleepTimer();
+        if (wakeMode || convoActive) startRecognizer();
+        showCaption();
+      }
+      function goToSleep() {
+        if (!wakeMode || !awake) return;
+        if (busy || state === 'speaking' || state === 'thinking') { armSleepTimer(); return }
+        awake = false; convoActive = false; busy = true;
+        chime(false); showCaption();
+        stopRecognizer();
+        speak("Going to sleep. Say Nova to wake me up.", () => { setState('idle'); resumeListening(); showCaption(); });
+      }
+      function wakeUp(restOfSentence, original) {
+        awake = true;
+        chime(true); showCaption();          // turant sanket: beep + button "awake"
+        setState('listening');
+        focusNova();
+        busy = true; stopRecognizer();
+        if (restOfSentence) {
+          runCommand(restOfSentence, true);
+        } else {
+          getCtx();
+          addMessage('user', original);
+          speak("Yes? Go ahead, I'm listening.", resumeListening);
+        }
       }
 
       function runCommand(said, viaVoice) {
@@ -1062,6 +1632,8 @@
         addMessage('user', said);
         setState('thinking');
         diagLatency.textContent = '-';
+        clearTimeout(sleepTimer);
+        if (wakeMode) { awake = true; busy = true; stopRecognizer() }   // Nova bolte waqt mic band: apni awaaz na sune
 
         const m = said.match(/^(jarvis|jervish|nova)[,]?\s*(.*)$/i);
         let toProcess = said, justWake = false;
@@ -1069,21 +1641,39 @@
           const rest = m[2].trim();
           if (!rest) justWake = true; else toProcess = rest;
         }
-        const after = viaVoice ? resumeListening : null;
+        const after = (viaVoice || wakeMode) ? resumeListening : null;
 
         setTimeout(() => {
-          diagLatency.textContent = Math.round(performance.now() - t0) + ' ms';
           if (justWake) {
+            diagLatency.textContent = Math.round(performance.now() - t0) + ' ms';
             speak("Yes? Go ahead, I'm listening.", after);
           } else {
-            processCommand(toProcess).then(r => speak(r, after));
+            streamCommand(toProcess, after, t0);
           }
         }, 380);
       }
 
       /* Speech recognition */
       const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      function idleCaption() { micCaption.textContent = 'Tap to speak' }
+      function idleCaption() { showCaption() }
+
+      function setWakeMode(on) {
+        wakeMode = on; awake = true;
+        wakeBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        wakeBtn.textContent = on ? 'Hey Nova: on' : 'Hey Nova: off';
+        try { localStorage.setItem('nova_wake', on ? '1' : '0') } catch (e) { }
+        clearTimeout(sleepTimer);
+        if (on) {
+          convoActive = true; busy = false;
+          if (recognizing) { stopRecognizer() }       // continuous mode me dobara shuru hoga (onend)
+          else startRecognizer();
+          armSleepTimer();
+        } else {
+          convoActive = false; stopRecognizer(); stopMic();
+          if (state === 'listening') setState('idle');
+        }
+        showCaption();
+      }
 
       if (SR) {
         recognizer = new SR();
@@ -1095,21 +1685,37 @@
           recognizing = true;
           micBtn.classList.add('active');
           micBtn.setAttribute('aria-label', 'Stop listening');
-          micCaption.textContent = convoActive ? 'Listening, conversation is on' : 'Listening';
-          setState('listening');
+          if (wakeMode && !awake) { setState('idle'); showCaption() }
+          else { setState('listening'); showCaption() }
           startMic();
         };
         recognizer.onresult = e => {
-          const said = e.results[0][0].transcript.trim();
-          if (!said) return;
-          convoActive = true;
-          runCommand(said, true);
+          for (let i = e.resultIndex; i < e.results.length; i++) {
+            if (!e.results[i].isFinal) continue;
+            const said = e.results[i][0].transcript.trim();
+            if (!said || busy) continue;
+            if (wakeMode && !awake) {
+              const w = said.match(WAKE_RX);
+              if (!w) continue;                       // soye hue ho: wake word ke bina sab ignore
+              wakeUp(said.slice(w.index + w[0].length).trim(), said);
+              return;
+            }
+            convoActive = true;
+            runCommand(said, true);
+            return;
+          }
         };
         recognizer.onerror = e => {
           if (e.error === 'no-speech') {
-            convoActive = false; setState('idle'); idleCaption();
+            if (!wakeMode) { convoActive = false; setState('idle'); idleCaption() }
           } else if (e.error === 'aborted') {
             /* intentional stop */
+          } else if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+            addMessage('nova', 'Microphone permission is blocked. Allow the mic for this page and try again.');
+            if (wakeMode) setWakeMode(false);
+            convoActive = false; setState('idle'); idleCaption();
+          } else if (wakeMode && (e.error === 'network' || e.error === 'audio-capture')) {
+            /* chhoti dikkat: onend dobara koshish karega */
           } else {
             addMessage('nova', 'Recognition error: ' + e.error);
             convoActive = false; setState('idle'); idleCaption();
@@ -1119,14 +1725,20 @@
           recognizing = false;
           micBtn.classList.remove('active');
           micBtn.setAttribute('aria-label', 'Start listening');
-          if (!convoActive) {
+          if (wakeMode && !busy) {                    // Chrome continuous mode kuch der baad khud band kar deta hai
+            clearTimeout(restartTimer);
+            restartTimer = setTimeout(startRecognizer, 300);
+          } else if (!wakeMode && !convoActive) {
             stopMic();
             idleCaption();
             if (state === 'listening') setState('idle');
           }
         };
+        wakeBtn.addEventListener('click', () => { getCtx(); setWakeMode(!wakeMode) });
+        try { if (localStorage.getItem('nova_wake') === '1') setWakeMode(true) } catch (e) { }
       } else {
         micCaption.textContent = 'Mic not supported here. Use Chrome or Edge, or type below.';
+        wakeBtn.style.display = 'none';
       }
 
       micBtn.addEventListener('click', () => {
@@ -1135,6 +1747,7 @@
           return;
         }
         getCtx();
+        if (wakeMode) { setWakeMode(false); return }     // Hey Nova on ho to mic button = band karo
         if (recognizing) {
           convoActive = false;
           recognizer.stop();
